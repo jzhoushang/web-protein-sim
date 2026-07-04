@@ -37,10 +37,10 @@ In the present work, $n=3$ and $L=128$.
 The random walk relies on a parameter $d$ corresponding to the "disorderliness" of the protein and $r$ corresponding to the ideal bond length between two amino acids.
 
 Starting from the initial conditions of $x_0=(0,0,0)$ and $\Delta x_0$ as a uniformly chosen point on the unit sphere, the next position can be found with $y$ as a list of uniformly chosen points on the unit sphere,
-$$
-x_{n+1}=x_n+r\Delta x_n \\
-\Delta x_{n+1}=\frac{\Delta x_n + y}{\lVert \Delta x_n+y_n \rVert}
-$$
+
+$x_{n+1}=x_n+r\Delta x_n$
+
+$\Delta x_{n+1}=\frac{\Delta x_n + y}{\lVert \Delta x_n+y_n \rVert}$
 
 In the present work, $d=3$ and $r=3.8$.
 
@@ -61,10 +61,10 @@ The angle constraint, dihedral constraint, and hydrogen bond forces create $\alp
 ### Hydrophobic interaction force
 
 Given an energy depth $E$, a distance parameter $\sigma$, and an ideal bond length $r$, the magnitude of the hydrophobic interaction force between two amino acids at a distance $d$,
-$$
-x=\frac{d-r}{\sigma} \\
-F=\frac{Ex}{1+x^2}
-$$
+
+$x=\frac{d-r}{\sigma}$
+
+$F=\frac{Ex}{1+x^2}$
 
 The direction of this force is determined by the hydrophobicity of the two amino acids.
 
