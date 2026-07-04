@@ -52,10 +52,11 @@ The random number function $X:\mathbb{N}\to[0,1)$ is constructed given three $n$
 - $(T_1,\ldots,T_n)$ chosen uniformly on the range $[0,L)$.
 - $(\phi_1,\ldots,\phi_n)$ chosen uniformly on the range $[0,L)$.
 
-The function $X(i)$ is then,\
-$$
+The function $X(i)$ is then,
+
+```math
 X(i)=\frac{1}{2}+\sum_{j=1}^{n}A_j\sin(\frac{2\pi}{T_j}i+\phi_j)
-$$
+```
 
 For the $i$-th amino acid, a uniformly generated random number $x_i$ is then compared to $X(i)$. If $x_i<X(i)$, the amino acid is hydrophobic. The remaining hydrophilic amino acids are uniformly distributed between positively, neutrally, and negatively charged.
 
@@ -67,11 +68,12 @@ In the present work, $n=3$ and $L=128$.
 
 The random walk relies on a parameter $d$ corresponding to the "disorderliness" of the protein and $r$ corresponding to the ideal bond length between two amino acids.
 
-Starting from the initial conditions of $x_0=(0,0,0)$ and $\Delta x_0$ as a uniformly chosen point on the unit sphere, the next position can be found with $y$ as a list of uniformly chosen points on the unit sphere,\
-$$
+Starting from the initial conditions of $x_0=(0,0,0)$ and $\Delta x_0$ as a uniformly chosen point on the unit sphere, the next position can be found with $y$ as a list of uniformly chosen points on the unit sphere,
+
+```math
 x_{n+1}=x_n+r\Delta x_n \\
 \Delta x_{n+1}=\frac{\Delta x_n + y}{\lVert \Delta x_n+y_n \rVert}
-$$
+```
 
 In the present work, $d=3$ and $r=3.8$.
 
@@ -91,11 +93,12 @@ The angle constraint, dihedral constraint, and hydrogen bond forces create $\alp
 
 ### Hydrophobic interaction force
 
-Given an energy depth $E$, a distance parameter $\sigma$, and an ideal bond length $r$, the magnitude of the hydrophobic interaction force between two amino acids at a distance $d$,\
-$$
+Given an energy depth $E$, a distance parameter $\sigma$, and an ideal bond length $r$, the magnitude of the hydrophobic interaction force between two amino acids at a distance $d$,
+
+```math
 x=\frac{d-r}{\sigma} \\
 F=\frac{Ex}{1+x^2}
-$$
+```
 
 The direction of this force is determined by the hydrophobicity of the two amino acids.
 
