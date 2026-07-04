@@ -1,19 +1,50 @@
-# Protein Simulator on the Web
+# Protein Simulation on the Web
 
-A simplified coarse-grained protein simulator for the web made using Three.js.
+A simplified coarse-grained protein simulation for the web made using Three.js.
 
-## Protein Generation
+## Table of Contents
+- [Protein Simulation on the Web](#protein-simulation-on-the-web)
+  - [Table of Contents](#table-of-contents)
+  - [Running the simulation](#running-the-simulation)
+  - [Simulation](#simulation)
+    - [Assumptions](#assumptions)
+    - [Units](#units)
+    - [Protein Generation](#protein-generation)
+    - [Amino acid generator](#amino-acid-generator)
+    - [Random walk](#random-walk)
+    - [Forces](#forces)
+    - [Hydrophobic interaction force](#hydrophobic-interaction-force)
+    - [Time-scale and numerical methods](#time-scale-and-numerical-methods)
+    - [Constants](#constants)
 
-In this simulation, amino acids are represented as point masses and sorted into four categories with the most important information about them:
+## Running the simulation
+
+The simulation can be seen by executing the Python script [server.py](/server.py) and accessing on `localhost:{PORT}`. The constant `PORT` can be changed within the Python script. By default, it is set to 8000.
+
+The camera can be swiveled using the left mouse button, zoomed using the scroll wheel, and the focal point can be changed using the right mouse button. By default, the camera will be focused on the center of the protein and rotate around it.
+
+## Simulation
+
+### Assumptions
+
+This simulation assumes that each individual amino acid acts as a point mass and point charge, i.e., has homogenous properties and no rotation. It assumes drag, energy loss, etc. act as dampeners that constantly reduce the speed of each amino acid by a certain percent. It assumes the proteins are in water or a similar hydrophilic medium, and that the intermolecular interactions between this medium and the protein as well as random thermal motion are negligible. It also assumes that more complex forces, namely the angle constraint force and the dihedral constraint force, can be modeled as spring-like forces.
+
+### Units
+
+The units used in the simulation are Angstrom, mdyn, 100 kg, s (although the simulation is sped up so each second which passes in real life is approximately $2.5\times10^{-13}$ s in the simulation), and the electron volt e.
+
+### Protein Generation
+
+In this simulation, amino acids are sorted into four categories with the most important information about them:
 
 - Hydrophobic, neutral (green)
 - Hydrophilic, neutral (white)
 - Hydrophilic, positively charged at +1 e (red)
 - Hydrophilic, negatively charged at -1 e (blue)
 
-A peptide of 400 amino acids is randomly generated and then placed using a random walk.
+A peptide of 400 amino acids is randomly generated and then placed using a random walk, described below.
 
-### Random amino acid generator
+### Amino acid generator
 
 The random number function $X:\mathbb{N}\to[0,1)$ is constructed given three $n$-tuples of numbers and a number $L\in\mathbb{R}$,
 
@@ -21,9 +52,10 @@ The random number function $X:\mathbb{N}\to[0,1)$ is constructed given three $n$
 - $(T_1,\ldots,T_n)$ chosen uniformly on the range $[0,L)$.
 - $(\phi_1,\ldots,\phi_n)$ chosen uniformly on the range $[0,L)$.
 
-The function $X(i)$ is then,
-
-$X(i)=\frac{1}{2}+\sum_{j=1}^{n}A_j\sin(\frac{2\pi}{T_j}i+\phi_j)$
+The function $X(i)$ is then,\
+$$
+X(i)=\frac{1}{2}+\sum_{j=1}^{n}A_j\sin(\frac{2\pi}{T_j}i+\phi_j)
+$$
 
 For the $i$-th amino acid, a uniformly generated random number $x_i$ is then compared to $X(i)$. If $x_i<X(i)$, the amino acid is hydrophobic. The remaining hydrophilic amino acids are uniformly distributed between positively, neutrally, and negatively charged.
 
@@ -35,15 +67,15 @@ In the present work, $n=3$ and $L=128$.
 
 The random walk relies on a parameter $d$ corresponding to the "disorderliness" of the protein and $r$ corresponding to the ideal bond length between two amino acids.
 
-Starting from the initial conditions of $x_0=(0,0,0)$ and $\Delta x_0$ as a uniformly chosen point on the unit sphere, the next position can be found with $y$ as a list of uniformly chosen points on the unit sphere,
-
-$x_{n+1}=x_n+r\Delta x_n$
-
-$\Delta x_{n+1}=\frac{\Delta x_n + y}{\lVert \Delta x_n+y_n \rVert}$
+Starting from the initial conditions of $x_0=(0,0,0)$ and $\Delta x_0$ as a uniformly chosen point on the unit sphere, the next position can be found with $y$ as a list of uniformly chosen points on the unit sphere,\
+$$
+x_{n+1}=x_n+r\Delta x_n \\
+\Delta x_{n+1}=\frac{\Delta x_n + y}{\lVert \Delta x_n+y_n \rVert}
+$$
 
 In the present work, $d=3$ and $r=3.8$.
 
-## Forces
+### Forces
 
 In this simulation, there are seven forces:
 
@@ -53,27 +85,27 @@ In this simulation, there are seven forces:
 4. Hydrogen bond force, modeled as a spring between each amino acid $i$ and $i+4$.
 5. Collision force, modeled as a spring between any amino acids within each other $r_{min}$ (a value that increases between amino acids $i$ and $j$ if $j>i+4$).
 6. Electrostatic force.
-7. Hydrophobic interaction force, modeled as an attraction between hydrophobic amino acids and a repulsion between hydrophilic and hydrophilic amino acids. This choice matches the behavior of a protein in water or a similar polar medium.
+7. Hydrophobic interaction force, modeled as an attraction between hydrophobic amino acids and a repulsion between hydrophilic and hydrophilic amino acids.
 
 The angle constraint, dihedral constraint, and hydrogen bond forces create $\alpha$-helices in the protein structure and force it into positions mimicking real proteins.
 
 ### Hydrophobic interaction force
 
-Given an energy depth $E$, a distance parameter $\sigma$, and an ideal bond length $r$, the magnitude of the hydrophobic interaction force between two amino acids at a distance $d$,
-
-$x=\frac{d-r}{\sigma}$
-
-$F=\frac{Ex}{1+x^2}$
+Given an energy depth $E$, a distance parameter $\sigma$, and an ideal bond length $r$, the magnitude of the hydrophobic interaction force between two amino acids at a distance $d$,\
+$$
+x=\frac{d-r}{\sigma} \\
+F=\frac{Ex}{1+x^2}
+$$
 
 The direction of this force is determined by the hydrophobicity of the two amino acids.
 
 In the present work, $E=0.15$, $\sigma=1$, and $r=3.8$.
 
-## Simulation
+### Time-scale and numerical methods
 
-### Units
+The simulation is sped up so each second which passes in real life is approximately $2.5\times10^{-13}$ s in the simulation. If the computer running the simulation is slower than the expected 30 fps, this time scale may be slowed. A computer running faster than this method will not face the same problem.
 
-The units used in the simulation are Angstrom, mdyn, 100 kg, s (although the simulation is sped up so each second which passes in real life is approximately $2.5\times10^{-13}$ s in the simulation), and the electron volt e.
+The simulation uses velocity Verlet integration.
 
 ### Constants
 
@@ -84,9 +116,3 @@ In the simulation, a few values are derived from real constants. Those are,
 - Coulomb's constant $k_c=2.307$ mdyn $\times$ Angstrom $^2\times$ e $^{-2}$.
 
 Other constraints (the energy depth, the spring constant for the various spring-like collision forces, etc.) were chosen so that most amino acid arrangements would result protein-like structures. Exact values for these can be found in the source code, but they do not correspond to any real constants.
-
-### Running the simulation
-
-The simulation can be seen by executing the Python script [server.py](/server.py) and accessing on `localhost:{PORT}`. The constant `PORT` can be changed within the Python script.
-
-The camera can be swiveled using the left mouse button, zoomed using the scroll wheel, and the focal point can be changed using the right mouse button. By default, the camera will be focused on the center of the protein and rotate around it.
