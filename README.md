@@ -23,9 +23,7 @@ The random number function $X:\mathbb{N}\to[0,1)$ is constructed given three $n$
 
 The function $X(i)$ is then,
 
-$
-X(i)=\frac{1}{2}+\sum_{j=1}^{n}A_j\sin(\frac{2\pi}{T_j}i+\phi_j)
-$
+$X(i)=\frac{1}{2}+\sum_{j=1}^{n}A_j\sin(\frac{2\pi}{T_j}i+\phi_j)$
 
 For the $i$-th amino acid, a uniformly generated random number $x_i$ is then compared to $X(i)$. If $x_i<X(i)$, the amino acid is hydrophobic. The remaining hydrophilic amino acids are uniformly distributed between positively, neutrally, and negatively charged.
 
