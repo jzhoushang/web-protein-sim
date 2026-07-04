@@ -1,7 +1,7 @@
 import http.server
 import socketserver
 
-PORT = 8001
+PORT = 8000
 
 # Explicitly add the correct JavaScript MIME types
 handler = http.server.SimpleHTTPRequestHandler
