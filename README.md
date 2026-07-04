@@ -48,7 +48,7 @@ A peptide of 400 amino acids is randomly generated and then placed using a rando
 
 The random number function $X:\mathbb{N}\to[0,1)$ is constructed given three $n$-tuples of numbers and a number $L\in\mathbb{R}$,
 
-- $(A_1,\ldots,A_n)$. Starting with a tuple of numbers $(a_n)$ chosen uniformly on the range $[0,1)$, $A_i=\frac{a_i}{2\sum_j^n a_j}$.
+- $(A_1,\ldots,A_n)$. Starting with a tuple of numbers $(a_n)$ chosen uniformly on the range $[0,1)$, $A_i=\frac{a_i}{2\sum_{j=1}^n a_j}$.
 - $(T_1,\ldots,T_n)$ chosen uniformly on the range $[0,L)$.
 - $(\phi_1,\ldots,\phi_n)$ chosen uniformly on the range $[0,L)$.
 
