@@ -22,11 +22,12 @@ The random number function $X:\mathbb{N}\to[0,1)$ is constructed given three $n$
 - $(\phi_1,\ldots,\phi_n)$ chosen uniformly on the range $[0,L)$.
 
 The function $X(i)$ is then,
-$$
-X(i)=\frac{1}{2}+\sum_{j=1}^{n}A_j\sin(\frac{2\pi}{T_j}i+\phi_j)
-$$
 
-For the $i$th amino acid, a uniformly generated random number $x_i$ is then compared to $X(i)$. If $x_i<X(i)$, the amino acid is hydrophobic. The remaining hydrophilic amino acids are uniformly distributed between positively, neutrally, and negatively charged.
+$
+X(i)=\frac{1}{2}+\sum_{j=1}^{n}A_j\sin(\frac{2\pi}{T_j}i+\phi_j)
+$
+
+For the $i$-th amino acid, a uniformly generated random number $x_i$ is then compared to $X(i)$. If $x_i<X(i)$, the amino acid is hydrophobic. The remaining hydrophilic amino acids are uniformly distributed between positively, neutrally, and negatively charged.
 
 This choice of random function creates a semi-periodic protein which contains hydrophobic and hydrophilic regions at pseudo-random intervals, mimicking common protein structures.
 
@@ -82,7 +83,7 @@ In the simulation, a few values are derived from real constants. Those are,
 
 - The mass of an amino acid $m_a=1.83\times10^{-27}\times100$ kg, using an approximation for the average mass of an amino acid (~110 Daltons).
 - The ideal bond length $r=3.8$ Angstrom, using an approximation for the length a (straight) peptide chain grows with each additional amino acid.
-- Coulomb's constant $k_c=2.307$ mdyn$\times$Angstrom$^2\times$e$^{-2}$.
+- Coulomb's constant $k_c=2.307$ mdyn $\times$ Angstrom $^2\times$ e $^{-2}$.
 
 Other constraints (the energy depth, the spring constant for the various spring-like collision forces, etc.) were chosen so that most amino acid arrangements would result protein-like structures. Exact values for these can be found in the source code, but they do not correspond to any real constants.
 
