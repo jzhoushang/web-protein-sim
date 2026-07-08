@@ -17,7 +17,6 @@ controls.autoRotateSpeed = 1.0;
 controls.update();
 controls.addEventListener('start', () => {
     controls.autoRotate = false;
-    document.getElementById("rotate-hint").style.opacity = 0.0;
 });
 
 const clock = new THREE.Clock();
@@ -50,8 +49,8 @@ const kd = 0.1; // dihedral constraint, mdyn/Angstrom (approximative)
 const kh = 2.5; // hydrogen bonding, mdyn/Angstrom
 const kr = 100.0; // collision force, mdyn/Angstrom
 
-const ed = 0.15; // energy depth, mdyn*Angstrom
-const sg = 1.0; // distance parameter, Angstrom
+const ed = 0.3; // energy depth, mdyn*Angstrom
+const sg = 3.0; // distance parameter, Angstrom
 
 const disorderliness = 3; // higher numbers make the protein start in more disordered states
 const boundingBox = r0 * 5;
@@ -299,7 +298,7 @@ function applyPhysics() {
             }
             if (aa1.hydrophobic != aa2.hydrophobic) {
                 const x = (d - r0) / sg;
-                const fhmag = -ed * x / (1 + x*x)
+                const fhmag = ed * x / (1 + x*x)
                 fnet = add3(fnet, scale(fhmag, rHat));
             }
             

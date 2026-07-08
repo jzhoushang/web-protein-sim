@@ -3,6 +3,7 @@
 A simplified coarse-grained protein simulation for the web made using Three.js.
 
 ## Table of Contents
+
 - [Protein Simulation on the Web](#protein-simulation-on-the-web)
   - [Table of Contents](#table-of-contents)
   - [Running the simulation](#running-the-simulation)
@@ -106,7 +107,7 @@ F=\frac{Ex}{1+x^2}
 
 The direction of this force is determined by the hydrophobicity of the two amino acids.
 
-In the present work, $E=0.15$, $\sigma=1$, and $r=3.8$.
+In the present work, $E=0.3$, $\sigma=3$, and $r=3.8$.
 
 ### Time-scale and numerical methods
 
